@@ -33,7 +33,7 @@ class HomeViewController: UIViewController,JSONDelegate {
 
 
 	func reloadData() {
-collectionView.reloadData()
+		collectionView.reloadData()
 	}
 
 	fileprivate  func networkCall(endPoint endpoint:String){
@@ -145,7 +145,7 @@ extension HomeViewController: UICollectionViewDataSource {
 		// IMPLEMENT:
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! BusinessCell
 		let businessArr = searchResults[indexPath.row]
-		let defaultImage = UIImage()
+		let defaultImage = UIImage(contentsOfFile: "weedMapsLogo")
 		cell.name?.text = businessArr.name
 		cell.thumbNail.image = defaultImage
 
@@ -166,9 +166,18 @@ extension HomeViewController: UICollectionViewDataSource {
 		return cell
 	}
 
+	func fetchSearch(){
+		guard let searchTerm = searchTxtBx.text else {return}
+		let searchQ = searchEndpoint + "term=\(searchTerm)&latitude=37.786882&longitude=-122.399972"
+
+
+		networkCall(endPoint: searchQ)
+	}
+
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 		//when you need that scroll to be infinite
 		if indexPath.row == searchResults.count-1 {
+			fetchSearch()
 
 		}
 	}
