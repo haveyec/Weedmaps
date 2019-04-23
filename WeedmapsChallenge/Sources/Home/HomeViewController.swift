@@ -70,8 +70,8 @@ collectionView.reloadData()
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		collectionView.backgroundColor = .green
-		self.locationManager.manager.requestAlwaysAuthorization()
-		self.jsonDel = self
+		locationManager.manager.requestAlwaysAuthorization()
+		jsonDel = self
 
 
 		
@@ -84,7 +84,7 @@ collectionView.reloadData()
 		let searchQ = searchEndpoint + "term=\(String(describing: searchTxtBx.text))&latitude=37.786882&longitude=-122.399972"
 
 
-		self.networkCall(endPoint: searchQ)
+		networkCall(endPoint: searchQ)
 	}
 
 
@@ -124,7 +124,7 @@ extension HomeViewController: UICollectionViewDelegate {
 			detailView.configure(with: businessOb)
 			self.navigationController?.pushViewController(detailView, animated: true)
 		}))
-		self.present(alert,animated: true)
+		present(alert,animated: true)
 	}
 }
 
