@@ -27,6 +27,7 @@ class HomeViewController: UIViewController,JSONDelegate {
 	@IBOutlet weak var searchTxtBx: UITextField!
 	var jsonDel:JSONDelegate?
 
+	@IBOutlet weak var searchCTA: UILabel!
 
 	// MARK: Lifecycle
 
@@ -72,6 +73,8 @@ class HomeViewController: UIViewController,JSONDelegate {
 		collectionView.backgroundColor = .green
 		locationManager.manager.requestAlwaysAuthorization()
 		jsonDel = self
+		searchCTA.text = "Seach for the business you're looking for"
+		searchTxtBx.placeholder = "Search"
 
 
 		

@@ -142,6 +142,7 @@
                     <navigationItem key="navigationItem" id="TnG-pJ-5IY"/>
                     <connections>
                         <outlet property="collectionView" destination="dPv-fP-pUP" id="pfc-Zc-dbZ"/>
+                        <outlet property="searchCTA" destination="ogC-Ri-Lkm" id="Tg1-DV-gCL"/>
                         <outlet property="searchTxtBx" destination="Vx0-YL-5cu" id="GLQ-lT-51U"/>
                         <outlet property="submitBTN" destination="e8V-tB-V1w" id="TFq-Q3-vqU"/>
                     </connections>
