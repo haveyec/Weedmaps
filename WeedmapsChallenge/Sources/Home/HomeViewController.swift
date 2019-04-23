@@ -81,7 +81,8 @@ collectionView.reloadData()
 		
 		//latitude=37.786882&longitude=-122.399972
 		//		let searchQ = searchEndpoint + "term=\(searchTxtBx.text)&latitude=\(locationManager.manager.location!.coordinate.latitude)&longitude=-\(locationManager.manager.location!.coordinate.longitude.description)"
-		let searchQ = searchEndpoint + "term=\(String(describing: searchTxtBx.text))&latitude=37.786882&longitude=-122.399972"
+		guard let searchTerm = searchTxtBx.text else {return}
+		let searchQ = searchEndpoint + "term=\(searchTerm)&latitude=37.786882&longitude=-122.399972"
 
 
 		networkCall(endPoint: searchQ)
@@ -106,6 +107,10 @@ extension HomeViewController: UISearchResultsUpdating {
 // MARK: UICollectionViewDelegate
 
 extension HomeViewController: UICollectionViewDelegate {
+	fileprivate func launch(_ url: URL) {
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
+	}
+
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		// IMPLEMENT:
 		// 1a) Present the user with a UIAlertController (action sheet style) with options
@@ -116,7 +121,7 @@ extension HomeViewController: UICollectionViewDelegate {
 		alert.addAction(UIAlertAction(title: "Open in Safari", style: .default, handler: { (alert) in
 			//Ask and then open in Safari
 			guard let url = URL(string: "") else{return}
-			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+			self.launch(url)
 		}))
 		alert.addAction(UIAlertAction(title: "Open Normal", style: .default, handler: { (alert) in
 			//launch webView
