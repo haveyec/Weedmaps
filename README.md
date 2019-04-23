@@ -1,1 +1,1 @@
-Public-WeedmapsChallenge
+I <3 Weedmaps!
