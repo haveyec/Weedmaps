@@ -55,7 +55,7 @@ class HomeViewController: UIViewController,JSONDelegate {
 				let decoder = JSONDecoder()
 
 				//using the array to put values
-				self.searchResults = try decoder.decode([Businesses].self, from: jsonData!)
+				self.searchResults = [try decoder.decode(Businesses.self, from: jsonData!)]
 				self.jsonDel?.reloadData()
 
 
@@ -149,7 +149,7 @@ extension HomeViewController: UICollectionViewDataSource {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! BusinessCell
 		let businessArr = searchResults[indexPath.row]
 		let defaultImage = UIImage(contentsOfFile: "weedMapsLogo")
-		cell.name?.text = businessArr.name
+		cell.name?.text = businessArr.name ?? "Not found"
 		cell.thumbNail.image = defaultImage
 
 		//A little background threading for the image
