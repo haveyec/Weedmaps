@@ -5,12 +5,14 @@
 import Foundation
 
 
+struct Root:Codable {
+	let businesses : [Businesses]
+}
 struct Businesses: Codable {
 
 	var name:String
 	var image_url:String
 	var is_closed:Bool
-	var location:[String:String]
 	var display_phone:String
 	var url:String
 

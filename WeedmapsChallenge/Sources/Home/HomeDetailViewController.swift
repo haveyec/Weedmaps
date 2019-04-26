@@ -15,6 +15,10 @@ class HomeDetailViewController: UIViewController {
     
     func configure(with business: Businesses) {
         // IMPLEMENT
+		let frame = CGRect(x: 0.0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+		webView = WKWebView(frame: frame, configuration: WKWebViewConfiguration())
+		super.viewDidLoad()
+		view.addSubview(webView)
 		if let url = URL(string: business.url) {
 			let request = URLRequest(url: url)
 			webView.load(request)

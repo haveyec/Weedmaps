@@ -55,7 +55,8 @@ class HomeViewController: UIViewController,JSONDelegate {
 				let decoder = JSONDecoder()
 
 				//using the array to put values
-				self.searchResults = [try decoder.decode(Businesses.self, from: jsonData!)]
+				let result = try decoder.decode(Root.self, from: jsonData!)
+				self.searchResults = result.businesses
 				self.jsonDel?.reloadData()
 
 
@@ -70,7 +71,6 @@ class HomeViewController: UIViewController,JSONDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		collectionView.backgroundColor = .green
 		locationManager.manager.requestAlwaysAuthorization()
 		jsonDel = self
 		searchCTA.text = "Seach for the business you're looking for"
@@ -82,10 +82,8 @@ class HomeViewController: UIViewController,JSONDelegate {
 
 	@IBAction func searchBtnPressed(){
 		
-		//latitude=37.786882&longitude=-122.399972
-		//		let searchQ = searchEndpoint + "term=\(searchTxtBx.text)&latitude=\(locationManager.manager.location!.coordinate.latitude)&longitude=-\(locationManager.manager.location!.coordinate.longitude.description)"
-		guard let searchTerm = searchTxtBx.text else {return}
-		let searchQ = searchEndpoint + "term=\(searchTerm)&latitude=37.786882&longitude=-122.399972"
+				let searchQ = searchEndpoint + "term=\(searchTxtBx.text)&latitude=\(locationManager.manager.location!.coordinate.latitude)&longitude=-\(locationManager.manager.location!.coordinate.longitude)"
+
 
 
 		networkCall(endPoint: searchQ)
@@ -123,7 +121,7 @@ extension HomeViewController: UICollectionViewDelegate {
 		let alert = UIAlertController(title: "Hey now", message: "How do you want it?", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Open in Safari", style: .default, handler: { (alert) in
 			//Ask and then open in Safari
-			guard let url = URL(string: "") else{return}
+			guard let url = URL(string: businessOb.url) else{return}
 			self.launch(url)
 		}))
 		alert.addAction(UIAlertAction(title: "Open Normal", style: .default, handler: { (alert) in
@@ -148,9 +146,17 @@ extension HomeViewController: UICollectionViewDataSource {
 		// IMPLEMENT:
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! BusinessCell
 		let businessArr = searchResults[indexPath.row]
+		let isTheyOpen:String
+		if businessArr.is_closed {
+			isTheyOpen = "Open :) "
+		}else{
+			isTheyOpen = "Closed :( "
+		}
 		let defaultImage = UIImage(contentsOfFile: "weedMapsLogo")
-		cell.name?.text = businessArr.name ?? "Not found"
+		cell.name?.text = businessArr.name
 		cell.thumbNail.image = defaultImage
+		cell.status.text = isTheyOpen
+		cell.subTitle.text = businessArr.display_phone
 
 		//A little background threading for the image
 		DispatchQueue.global(qos: .background).async  {
